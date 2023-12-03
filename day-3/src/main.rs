@@ -7,7 +7,6 @@ fn main() {
     println!("Part 2 = {}", part_2(input));
 }
 
-#[derive(Debug)]
 struct Number {
     row: usize,
     col: usize,
@@ -31,19 +30,15 @@ fn part_1(input: &str) -> u32 {
     let width = input[0].len();
     let height = input.len();
 
-    // find numbers
     find_numbers(&input)
         .iter()
         .filter_map(|number| {
             let mut adjacent = HashSet::<(usize, usize)>::new();
 
             for (magnitude, _) in number.digits.iter().enumerate() {
-                for adjacent_square in in_bounds_adjacent(
-                    number.row as isize,
-                    number.col as isize + magnitude as isize,
-                    width,
-                    height,
-                ) {
+                for adjacent_square in
+                    in_bounds_adjacent(number.row, number.col + magnitude, width, height)
+                {
                     adjacent.insert(adjacent_square);
                 }
             }
@@ -99,31 +94,18 @@ fn find_numbers(input: &[&str]) -> Vec<Number> {
 }
 
 fn in_bounds_adjacent(
-    row_index: isize,
-    col_index: isize,
+    row_index: usize,
+    col_index: usize,
     width: usize,
     height: usize,
 ) -> Vec<(usize, usize)> {
-    let coords = [
-        (row_index, col_index + 1),
-        (row_index, col_index - 1),
-        (row_index + 1, col_index),
-        (row_index - 1, col_index),
-        (row_index + 1, col_index - 1),
-        (row_index - 1, col_index - 1),
-        (row_index + 1, col_index + 1),
-        (row_index - 1, col_index + 1),
-    ];
+    let cols = col_index.checked_sub(1).unwrap_or(col_index)..=(col_index + 1).min(width - 1);
+    let rows = row_index.checked_sub(1).unwrap_or(row_index)..=(row_index + 1).min(height - 1);
 
-    coords
-        .into_iter()
-        .filter(|coord| in_bounds(coord.0, coord.1, width, height))
-        .map(|coord| (coord.0 as usize, coord.1 as usize))
-        .collect::<Vec<(usize, usize)>>()
-}
-
-fn in_bounds(row_index: isize, col_index: isize, width: usize, height: usize) -> bool {
-    row_index >= 0 && row_index < height as isize && col_index >= 0 && col_index < width as isize
+    rows.into_iter()
+        .map(move |row| cols.clone().map(move |col| (row, col)))
+        .flatten()
+        .collect()
 }
 
 fn part_2(input: &str) -> u32 {
@@ -150,10 +132,8 @@ fn part_2(input: &str) -> u32 {
                 .filter_map(|number| {
                     // if any digit of number has pythagorean distance of <=sqrt(2) to asterisk then it is adjacent
                     for num_digit in 0..number.digits.len() {
-                        if ((number.col as f32 + num_digit as f32 - asterisk_col as f32)
-                            .powf(2_f32)
-                            + (number.row as f32 - asterisk_row as f32).powf(2_f32))
-                        .sqrt() as f32
+                        if (number.col as f32 + num_digit as f32 - asterisk_col as f32)
+                            .hypot(number.row as f32 - asterisk_row as f32)
                             <= 2_f32.sqrt()
                         {
                             return Some(number.value());
