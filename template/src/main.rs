@@ -16,13 +16,15 @@ fn part_2(input: &str) -> u32 {
 mod tests {
     use super::*;
 
+    const TEST_VECTOR: &str = "";
+
     #[test]
     fn part_1_example() {
-        assert_eq!(part_1(""), 0);
+        assert_eq!(part_1(TEST_VECTOR), 0);
     }
 
     #[test]
     fn part_2_example() {
-        assert_eq!(part_2(""), 0);
+        assert_eq!(part_2(TEST_VECTOR), 0);
     }
 }
