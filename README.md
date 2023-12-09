@@ -27,3 +27,11 @@
 - **Day 7**
   - **Part 1**: My favourite puzzle so far, I enjoyed calculating the hand type from the cards. I forgot that aces are better than kings which slowed me down a bit.
   - **Part 2**: Brute force all joker permutations with cartesian product to see if they produce a higher hand type than the current. I'm too silly to figure out the proper solution if there is one. Cartesian product in real life though.
+
+- **Day 8**
+  - **Part 1**: Straightforward.
+  - **Part 2**: I didn't recognise that I had to use LCM so I brute forced it for an hour before looking up the solution.
+
+- **Day 9**
+  - **Part 1**: Straightforward enough although I think the test cases they gave were a little narrow i.e. didn't include negatives.
+  - **Part 2**: Very simple solution of just reversing the input string, idk why they did this.
