@@ -35,3 +35,9 @@
 - **Day 9**
   - **Part 1**: Straightforward enough although I think the test cases they gave were a little narrow i.e. didn't include negatives.
   - **Part 2**: Very simple solution of just reversing the input string, idk why they did this.
+
+- **Day 10**
+
+- **Day 11**
+  - **Part 1**: I solved it by actually expanding the galaxy to contain new rows and cols, then after solving part 2 I went back and made it use part 2.
+  - **Part 2**: Got stuck for a bit cause I was adding one too many rows to the total distance. I liked this day. 
